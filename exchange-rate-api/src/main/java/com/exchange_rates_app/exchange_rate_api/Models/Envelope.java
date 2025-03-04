@@ -2,7 +2,7 @@ package com.exchange_rates_app.exchange_rate_api.Models;
 
 import java.util.List;
 
-public class Element {
+public class Envelope {
 
     private List<Cube> cube;
 
