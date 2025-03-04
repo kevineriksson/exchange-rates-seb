@@ -9,6 +9,8 @@ import jakarta.xml.bind.JAXBException;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.List;
+import java.util.Optional;
 
 public class ExchangeRateService {
     private final ExchangeRateRepo exchangeRateRepo;
@@ -34,5 +36,12 @@ public class ExchangeRateService {
         }
     }
 
+    public List<CurrencyRate> getAllCurrencyRates() {
+        return exchangeRateRepo.findAll();
+    }
 
+    public CurrencyRate getCurrencyRateById(Long id) {
+        Optional<CurrencyRate> currencyRate = exchangeRateRepo.findById(id);
+        return currencyRate.orElse(null);
+    }
 }
