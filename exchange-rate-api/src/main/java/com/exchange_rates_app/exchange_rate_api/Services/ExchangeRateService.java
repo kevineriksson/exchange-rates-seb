@@ -13,7 +13,6 @@ import java.util.stream.Collectors;
 @Service
 public class ExchangeRateService {
     private final ExchangeRateRepo exchangeRateRepo;
-    private String url = "https://www.ecb.europa.eu/stats/eurofxref/eurofxref-hist-90d.xml";
 
     public ExchangeRateService(ExchangeRateRepo exchangeRateRepo) {
         this.exchangeRateRepo = exchangeRateRepo;
@@ -44,10 +43,11 @@ public class ExchangeRateService {
         return currencyRate.orElse(null);
     }
     public List<CurrencyGrowth> getTop5CurrencyMovers() throws JAXBException, IOException {
-        return findTop5CurrencyMovers(url);
+        String url = "https://www.ecb.europa.eu/stats/eurofxref/eurofxref-hist-90d.xml";
+        return findTop5GrowthCurrencyMovers(url);
     }
 
-    public List<CurrencyGrowth> findTop5CurrencyMovers(String url) throws JAXBException, IOException {
+    public List<CurrencyGrowth> findTop5GrowthCurrencyMovers(String url) throws JAXBException, IOException {
         Envelope envelope = ExchangeRateFetcher.fetchExchangeRates(url);
 
         Map<String, List<CurrencyRate>> currencyRates = envelope.getCubeContainer().getCubeWrappers().stream()
@@ -71,4 +71,22 @@ public class ExchangeRateService {
                 .limit(5)
                 .collect(Collectors.toList());
     }
+
+    /*public List<CurrencyGrowth> findTop5CurrencyMovers(String url) throws JAXBException, IOException {
+        Envelope envelope = ExchangeRateFetcher.fetchExchangeRates(url);
+
+        Map<String, List<CurrencyRate>> currencyRates = envelope.getCubeContainer().getCubeWrappers().stream()
+                .flatMap(cubeWrapper -> cubeWrapper.getCubeRates().stream())
+                .map(rateData -> {
+                    CurrencyRate currencyRate = new CurrencyRate();
+                    currencyRate.setRate(Double.parseDouble(rateData.getRate()));
+                    currencyRate.setCurrency(rateData.getCurrency());
+                    return currencyRate;
+                })
+                .collect(Collectors.groupingBy(CurrencyRate::getCurrency));
+
+        ExchangeRateCalculator exchangeRateCalculator = new ExchangeRateCalculator();
+        List<CurrencyGrowth> moversList = exchangeRateCalculator.calculateGrowth(currencyRates);
+        return getTop5CurrenciesBasedOnGrowth(moversList);
+    }*/
 }
