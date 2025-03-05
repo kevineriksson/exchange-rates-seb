@@ -1,21 +1,53 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, effect, OnInit, signal} from '@angular/core';
 import {ExchangeRateService} from '../../services/exchange-rate.service';
+import {CurrencyRate} from '../../CurrencyRate';
+import {FormsModule} from '@angular/forms';
+import {CommonModule, DecimalPipe} from '@angular/common';
 
 @Component({
   selector: 'app-currency-converter',
-  imports: [],
+  standalone: true,
+  imports: [
+    FormsModule,
+    CommonModule,
+    DecimalPipe
+  ],
   templateUrl: './currency-converter.component.html',
   styleUrl: './currency-converter.component.css'
 })
-export class CurrencyConverterComponent implements OnInit{
+export class CurrencyConverterComponent implements OnInit {
+  currencyRates: CurrencyRate[] = [];
+  amount: number = 1;
+  selectedCurrency: string = '';
+  loading: boolean = true;
 
-  fromCurrency = 'EUR';
-  toCurrency = 'USD';
-  amount = 1;
-  convertedAmount = 2;
-  constructor(private exchangeRateService: ExchangeRateService) {}
+  constructor(private currencyService: ExchangeRateService) {}
 
   ngOnInit() {
-    this.exchangeRateService.getCurrencies().subscribe()
+    this.currencyService.fetchCurrencyRates().subscribe({
+      next: (rates) => {
+        this.currencyRates = rates;
+        this.loading = false;
+        if (rates.length > 0) {
+          this.selectedCurrency = rates[0].currency;
+        }
+      },
+      error: (err) => {
+        console.error('Error fetching currency rates', err);
+        this.loading = false;
+      }
+    });
+  }
+
+  get convertedAmount(): number | null {
+    if (!this.amount) return null;
+
+    const selectedRate = this.currencyRates.find(
+      rate => rate.currency === this.selectedCurrency
+    );
+
+    return selectedRate
+      ? this.amount * selectedRate.rate
+      : null;
   }
 }
