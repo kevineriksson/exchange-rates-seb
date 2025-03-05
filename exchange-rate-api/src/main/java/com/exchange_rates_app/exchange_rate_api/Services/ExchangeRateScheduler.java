@@ -27,14 +27,4 @@ public class ExchangeRateScheduler {
             throw new RuntimeException(e);
         }
     }
-    public void fetchAndSaveRates90Days() {
-        try {
-            String url = "https://www.ecb.europa.eu/stats/eurofxref/eurofxref-hist-90d.xml";
-            exchangeRateService.saveCurrencyRates(url);
-        } catch (JAXBException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
 }

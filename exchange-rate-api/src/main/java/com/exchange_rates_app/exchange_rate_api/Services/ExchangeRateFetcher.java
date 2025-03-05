@@ -13,7 +13,7 @@ import java.net.URL;
 @Component
 public class ExchangeRateFetcher {
 
-    public static Envelope parseXML(String url) throws JAXBException, IOException {
+    public static Envelope fetchExchangeRates(String url) throws JAXBException, IOException {
         URL urlObj = new URL(url);
         InputStream inputStream = urlObj.openStream();
         JAXBContext context = JAXBContext.newInstance(Envelope.class);
