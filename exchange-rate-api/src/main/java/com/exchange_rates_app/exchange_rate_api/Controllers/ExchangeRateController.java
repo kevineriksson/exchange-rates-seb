@@ -3,7 +3,6 @@ package com.exchange_rates_app.exchange_rate_api.Controllers;
 import com.exchange_rates_app.exchange_rate_api.Models.CurrencyRate;
 import com.exchange_rates_app.exchange_rate_api.Services.ExchangeRateScheduler;
 import com.exchange_rates_app.exchange_rate_api.Services.ExchangeRateService;
-import jakarta.xml.bind.JAXBException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,8 +14,8 @@ import java.util.Optional;
 @RequestMapping("/api/currencyRates")
 public class ExchangeRateController {
 
-    private ExchangeRateService exchangeRateService;
-    private ExchangeRateScheduler exchangeRateScheduler;
+    private final ExchangeRateService exchangeRateService;
+    private final ExchangeRateScheduler exchangeRateScheduler;
 
 
     @Autowired

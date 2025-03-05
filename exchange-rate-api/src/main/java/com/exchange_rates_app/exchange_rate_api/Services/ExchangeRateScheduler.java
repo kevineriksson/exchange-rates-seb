@@ -2,7 +2,6 @@ package com.exchange_rates_app.exchange_rate_api.Services;
 
 import jakarta.xml.bind.JAXBException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;

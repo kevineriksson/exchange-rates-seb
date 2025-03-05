@@ -9,7 +9,7 @@ import java.io.IOException;
 @SpringBootApplication
 public class ExchangeRateApiApplication {
 
-	public static void main(String[] args) throws JAXBException, IOException {
+	public static void main(String[] args) throws {
 
 		SpringApplication.run(ExchangeRateApiApplication.class, args);
 	}
