@@ -1,1 +1,23 @@
-<p>currency-converter works!</p>
+<div class="currency-converter">
+  <h2>Currency Converter</h2>
+  <div>
+    <div *ngIf="loading">Loading rates...</div>
+    <div class="currency-amount" *ngIf="!loading && currencyRates.length">
+      <input
+        class = "converter-input"
+        type="number"
+        [(ngModel)]="amount"
+        placeholder="Enter amount in EUR"
+      >
+      <select [(ngModel)]="selectedCurrency">
+        <option *ngFor="let rate of currencyRates" [value]="rate.currency">
+          {{ rate.currency }}
+        </option>
+      </select>
+  </div>
+
+    <p *ngIf="convertedAmount !== null">
+      {{ amount }} EUR = {{ convertedAmount | number:'1.2-2' }} {{ selectedCurrency }}
+    </p>
+  </div>
+</div>
