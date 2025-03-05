@@ -7,7 +7,7 @@ import java.util.List;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class CubeContainer {
 
-    @XmlElement(name = "Cube")
+    @XmlElement(name = "Cube", namespace = "http://www.ecb.int/vocabulary/2002-08-01/eurofxref")
     private List<CubeWrapper> cubeWrappers;
 
     public List<CubeWrapper> getCubeWrappers() {

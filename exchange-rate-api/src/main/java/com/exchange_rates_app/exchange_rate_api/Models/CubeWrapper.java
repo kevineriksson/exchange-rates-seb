@@ -13,9 +13,9 @@ public class CubeWrapper {
     @XmlAttribute(name = "time")
     private String time;
 
+    @XmlElement(name = "Cube", namespace = "http://www.ecb.int/vocabulary/2002-08-01/eurofxref")
     private List<CubeRates> cubeRates;
 
-    @XmlElement(name = "Cube")
     public List<CubeRates> getCubeRates() {
         return cubeRates;
     }
