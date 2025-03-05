@@ -1,15 +1,18 @@
 package com.exchange_rates_app.exchange_rate_api.Models;
 
-import java.util.List;
+import jakarta.xml.bind.annotation.XmlRootElement;
+import jakarta.xml.bind.annotation.XmlElement;
 
+@XmlRootElement(name = "Envelope")
 public class Envelope {
 
-    private List<Cube> cube;
+    private CubeContainer cubeContainer;
 
-    public List<Cube> getCube() {
-        return cube;
+    @XmlElement(name = "Cube")
+    public CubeContainer getCubeContainer() {
+        return cubeContainer;
     }
-    public void setCube(List<Cube> cube) {
-        this.cube = cube;
+    public void setCubeContainer(CubeContainer cubeContainer) {
+        this.cubeContainer = cubeContainer;
     }
 }

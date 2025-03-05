@@ -1,6 +1,8 @@
 package com.exchange_rates_app.exchange_rate_api.Models;
 
 import jakarta.persistence.*;
+import jakarta.xml.bind.annotation.XmlAttribute;
+
 import java.time.LocalDate;
 
 @Entity
@@ -12,10 +14,12 @@ public class CurrencyRate {
     private Long id;
 
     @Column(nullable = false)
+    @XmlAttribute (name = "currency")
     private String currency;
 
+    @XmlAttribute (name = "rate")
     @Column(nullable = false)
-    private String rate;
+    private Double rate;
 
     @Column(nullable = false)
     private LocalDate date;
@@ -37,11 +41,11 @@ public class CurrencyRate {
         this.currency = currency;
     }
 
-    public String getRate() {
+    public Double getRate() {
         return rate;
     }
 
-    public void setRate(String rate) {
+    public void setRate(Double rate) {
         this.rate = rate;
     }
 
