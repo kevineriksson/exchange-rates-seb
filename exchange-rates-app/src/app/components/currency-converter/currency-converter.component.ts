@@ -1,14 +1,12 @@
 import {Component, effect, OnInit, signal} from '@angular/core';
 import {ExchangeRateService} from '../../services/exchange-rate.service';
 import {CurrencyRate} from '../../CurrencyRate';
-import {FormsModule} from '@angular/forms';
 import {CommonModule, DecimalPipe} from '@angular/common';
 
 @Component({
   selector: 'app-currency-converter',
   standalone: true,
   imports: [
-    FormsModule,
     CommonModule,
     DecimalPipe
   ],
