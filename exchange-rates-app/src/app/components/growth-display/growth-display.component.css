@@ -1,0 +1,38 @@
+.top-5-movers {
+  padding-top: 20px;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+li {
+  background-color: #f4f4f4;
+  margin: 10px 0;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  font-size: 1.1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: all 0.3s ease;
+}
+
+li span.currency {
+  font-weight: bold;
+  color: #333;
+}
+
+li span.growth-rate {
+  font-size: 1.2rem;
+  color: #4caf50;
+}
+
+.loading-message {
+  text-align: center;
+  font-size: 1.5rem;
+  color: #888;
+}

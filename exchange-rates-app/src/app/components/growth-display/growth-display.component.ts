@@ -2,10 +2,14 @@ import {Component, OnInit} from '@angular/core';
 import {RateGrowthService} from '../../services/rate-growth.service';
 import {CurrencyRate} from '../../CurrencyRate';
 import {CurrencyGrowth} from '../../CurrencyGrowth';
+import {CommonModule, DecimalPipe} from '@angular/common';
 
 @Component({
   selector: 'app-growth-display',
-  imports: [],
+  imports: [
+    DecimalPipe,
+    CommonModule
+  ],
   templateUrl: './growth-display.component.html',
   styleUrl: './growth-display.component.css',
   standalone: true

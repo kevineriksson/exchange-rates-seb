@@ -1,1 +1,12 @@
-<p>growth-display works!</p>
+<div class="top-5-movers" *ngIf="growthRates.length">
+  <h3>Top 5 growth movers over the last 10 days</h3>
+  <ul>
+    <li *ngFor="let rate of growthRates">
+      <span class="currency">{{ rate.currency }}</span>
+      <span class="growth-rate">{{ rate.growth | number:'1.2-2' }}%</span>
+    </li>
+  </ul>
+</div>
+<div *ngIf="!growthRates.length">
+  <p class="loading-message">No growth data available.</p>
+</div>
