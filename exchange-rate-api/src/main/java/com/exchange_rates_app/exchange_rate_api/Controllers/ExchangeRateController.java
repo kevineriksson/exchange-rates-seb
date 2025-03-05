@@ -38,7 +38,7 @@ public class ExchangeRateController {
     @PostMapping("/fetch")
     public String fetchExchangeRates() {
         try {
-            exchangeRateScheduler.fetchAndSaveRates();
+            exchangeRateScheduler.fetchAndSaveRatesDaily();
             return "Exchange rates successfully fetched and saved!";
         } catch (Exception e) {
             return "Error fetching exchange rates: " + e.getMessage();

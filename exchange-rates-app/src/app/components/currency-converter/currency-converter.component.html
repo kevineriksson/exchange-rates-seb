@@ -1,8 +1,9 @@
 <div class="currency-converter">
   <h2>Currency Converter</h2>
-  <div>
-    <div *ngIf="loading">Loading rates...</div>
-    <div class="currency-amount" *ngIf="!loading && currencyRates.length">
+
+  <div *ngIf="loading">Loading rates...</div>
+  <div *ngIf="!loading && currencyRates.length">
+    <div class= "currency-amount">
       <input
         class = "converter-input"
         type="number"
@@ -14,8 +15,7 @@
           {{ rate.currency }}
         </option>
       </select>
-  </div>
-
+    </div>
     <p *ngIf="convertedAmount !== null">
       {{ amount }} EUR = {{ convertedAmount | number:'1.2-2' }} {{ selectedCurrency }}
     </p>
