@@ -1,5 +1,5 @@
 export interface CurrencyGrowth {
-  growth: number;
+  movement: number;
   currency: string;
   date: Date;
 }

@@ -22,6 +22,7 @@ export class MovementDisplayComponent implements OnInit{
     this.rateGrowthService.fetchTop5MovingRates().subscribe({
       next: (rates) => {
         this.movementRates = rates;
+        console.log(rates)
       },
       error: (err) => {
         console.error('Error fetching currency rates', err);
