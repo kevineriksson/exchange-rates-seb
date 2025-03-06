@@ -19,7 +19,7 @@ export class GrowthDisplayComponent implements OnInit{
   constructor(private rateGrowthService: RateGrowthService) {}
 
   ngOnInit() {
-    this.rateGrowthService.fetchTop5MovingRates().subscribe({
+    this.rateGrowthService.fetchTop5GrowingRates().subscribe({
       next: (rates) => {
         this.growthRates = rates;
       },

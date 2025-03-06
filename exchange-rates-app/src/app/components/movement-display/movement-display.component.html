@@ -1,0 +1,13 @@
+<div class="top-5-movers" *ngIf="movementRates.length">
+  <h3>Top 5 negative and positive movers</h3>
+  <span>Over last 90 days in a 10 day period</span>
+  <ul>
+    <li *ngFor="let rate of movementRates">
+      <span class="currency">{{ rate.currency }}</span>
+      <span class="growth-rate">{{ rate.growth | number:'1.2-2' }}%</span>
+    </li>
+  </ul>
+</div>
+<div *ngIf="!movementRates.length">
+  <p class="loading-message">No growth data available.</p>
+</div>
