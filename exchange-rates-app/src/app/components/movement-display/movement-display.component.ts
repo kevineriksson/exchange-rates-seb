@@ -1,14 +1,15 @@
 import {Component, OnInit} from '@angular/core';
 import {CurrencyGrowth} from '../../CurrencyGrowth';
 import {RateGrowthService} from '../../services/rate-growth.service';
-import {DecimalPipe, NgForOf, NgIf} from '@angular/common';
+import {DecimalPipe, NgClass, NgForOf, NgIf} from '@angular/common';
 
 @Component({
   selector: 'app-movement-display',
   imports: [
     DecimalPipe,
     NgForOf,
-    NgIf
+    NgIf,
+    NgClass
   ],
   templateUrl: './movement-display.component.html',
   styleUrl: './movement-display.component.css'

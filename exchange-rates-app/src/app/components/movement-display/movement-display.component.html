@@ -4,7 +4,9 @@
   <ul>
     <li *ngFor="let rate of movementRates">
       <span class="currency">{{ rate.currency }}</span>
-      <span class="growth-rate">{{ rate.growth | number:'1.2-2' }}%</span>
+      <span
+        [ngClass]="rate.growth >= 0 ? 'growth-rate' : 'decline-rate'"> {{ rate.growth | number:'1.2-2' }}%
+      </span>
     </li>
   </ul>
 </div>

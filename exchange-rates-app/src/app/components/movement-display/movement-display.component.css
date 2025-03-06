@@ -30,6 +30,10 @@ li span.growth-rate {
   font-size: 1.2rem;
   color: #4caf50;
 }
+li span.decline-rate {
+  font-size: 1.2rem;
+  color: #ca1212;
+}
 
 .loading-message {
   text-align: center;
