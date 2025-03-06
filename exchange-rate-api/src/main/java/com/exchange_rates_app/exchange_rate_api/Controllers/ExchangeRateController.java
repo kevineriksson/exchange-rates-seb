@@ -14,6 +14,9 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
+import static com.exchange_rates_app.exchange_rate_api.Services.ExchangeRateService.MovementType.BIGGEST_MOVEMENT;
+import static com.exchange_rates_app.exchange_rate_api.Services.ExchangeRateService.MovementType.GROWTH;
+
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/api/currencyRates")
@@ -39,8 +42,13 @@ public class ExchangeRateController {
         return currencyRate.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    @GetMapping("/top5")
-    public List<CurrencyGrowth> getTop5CurrencyGrowths() throws JAXBException, IOException {
-        return exchangeRateService.getTop5CurrencyMovers();
+    @GetMapping("/top5/growth")
+    public List<CurrencyGrowth> getTop5GrowthCurrencyMovers() throws JAXBException, IOException {
+        return exchangeRateService.getTop5CurrencyMovers(GROWTH);
+    }
+
+    @GetMapping("/top5/movement")
+    public List<CurrencyGrowth> getTop5CurrencyMovers() throws JAXBException, IOException {
+        return exchangeRateService.getTop5CurrencyMovers(BIGGEST_MOVEMENT);
     }
 }

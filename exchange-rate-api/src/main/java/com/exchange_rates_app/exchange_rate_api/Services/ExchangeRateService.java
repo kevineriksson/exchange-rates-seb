@@ -31,7 +31,6 @@ public class ExchangeRateService {
 
             exchangeRateRepo.save(currencyRate);
         }
-
     }
 
     public List<CurrencyRate> getAllCurrencyRates() {
@@ -42,40 +41,42 @@ public class ExchangeRateService {
         Optional<CurrencyRate> currencyRate = exchangeRateRepo.findById(id);
         return currencyRate.orElse(null);
     }
-    public List<CurrencyGrowth> getTop5CurrencyMovers() throws JAXBException, IOException {
+    public List<CurrencyGrowth> getTop5CurrencyMovers(Enum movementType) throws JAXBException, IOException {
         String url = "https://www.ecb.europa.eu/stats/eurofxref/eurofxref-hist-90d.xml";
-        return findTop5GrowthCurrencyMovers(url);
+
+        if (movementType == MovementType.GROWTH){
+            return findTop5GrowthCurrencyMovers(url);
+        } else if (movementType == MovementType.BIGGEST_MOVEMENT) {
+            return findTop5CurrencyMovers(url);
+        }
+        return List.of();
     }
 
     public List<CurrencyGrowth> findTop5GrowthCurrencyMovers(String url) throws JAXBException, IOException {
-        Envelope envelope = ExchangeRateFetcher.fetchExchangeRates(url);
-
-        Map<String, List<CurrencyRate>> currencyRates = envelope.getCubeContainer().getCubeWrappers().stream()
-                .flatMap(cubeWrapper -> cubeWrapper.getCubeRates().stream())
-                .map(rateData -> {
-                    CurrencyRate currencyRate = new CurrencyRate();
-                    currencyRate.setRate(Double.parseDouble(rateData.getRate()));
-                    currencyRate.setCurrency(rateData.getCurrency());
-                    return currencyRate;
-                })
-                .collect(Collectors.groupingBy(CurrencyRate::getCurrency));
+        Map<String, List<CurrencyRate>> currencyRates = getStringListMap(url);
 
         ExchangeRateCalculator exchangeRateCalculator = new ExchangeRateCalculator();
         List<CurrencyGrowth> growthList = exchangeRateCalculator.calculateGrowth(currencyRates);
         return getTop5CurrenciesBasedOnGrowth(growthList);
     }
 
+    public List<CurrencyGrowth> findTop5CurrencyMovers(String url) throws JAXBException, IOException {
+        Map<String, List<CurrencyRate>> currencyRates = getStringListMap(url);
+
+        ExchangeRateCalculator exchangeRateCalculator = new ExchangeRateCalculator();
+        List<CurrencyGrowth> moversList = exchangeRateCalculator.calculateTopMovements(currencyRates);
+        return getTop5CurrenciesBasedOnGrowth(moversList);
+    }
     private List<CurrencyGrowth> getTop5CurrenciesBasedOnGrowth(List<CurrencyGrowth> growthList) {
         return growthList.stream()
-                .sorted((a, b) -> Double.compare(b.getGrowth(), a.getGrowth()))
+                .sorted((a, b) -> Double.compare(Math.abs(b.getGrowth()), Math.abs(a.getGrowth())))
                 .limit(5)
                 .collect(Collectors.toList());
     }
-
-    /*public List<CurrencyGrowth> findTop5CurrencyMovers(String url) throws JAXBException, IOException {
+    private static Map<String, List<CurrencyRate>> getStringListMap(String url) throws JAXBException, IOException {
         Envelope envelope = ExchangeRateFetcher.fetchExchangeRates(url);
 
-        Map<String, List<CurrencyRate>> currencyRates = envelope.getCubeContainer().getCubeWrappers().stream()
+        return envelope.getCubeContainer().getCubeWrappers().stream()
                 .flatMap(cubeWrapper -> cubeWrapper.getCubeRates().stream())
                 .map(rateData -> {
                     CurrencyRate currencyRate = new CurrencyRate();
@@ -84,9 +85,11 @@ public class ExchangeRateService {
                     return currencyRate;
                 })
                 .collect(Collectors.groupingBy(CurrencyRate::getCurrency));
+    }
 
-        ExchangeRateCalculator exchangeRateCalculator = new ExchangeRateCalculator();
-        List<CurrencyGrowth> moversList = exchangeRateCalculator.calculateGrowth(currencyRates);
-        return getTop5CurrenciesBasedOnGrowth(moversList);
-    }*/
+    public enum MovementType {
+        GROWTH,
+        BIGGEST_MOVEMENT
+    }
 }
+
