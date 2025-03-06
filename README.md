@@ -26,9 +26,9 @@ Steps:
 3. Run the project
 
 Endpoints
-GET /api/currencyRates: Fetch the latest exchange rate data from the database for today.
-GET /api/currencyRates/growth: Retrieve the top 5 currency movers based on biggest growth.
-GET /api/currencyRates/movement: Retrieve the top 5 currency movers based on biggest movement in last 90 days over 10 day period.
+1. GET /api/currencyRates: Fetch the latest exchange rate data from the database for today.
+2. GET /api/currencyRates/growth: Retrieve the top 5 currency movers based on biggest growth.3
+3. GET /api/currencyRates/movement: Retrieve the top 5 currency movers based on biggest movement in last 90 days over 10 day period.
 
 # Frontend - Angular
 1. Requirements:
