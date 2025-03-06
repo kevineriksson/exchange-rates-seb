@@ -41,7 +41,7 @@ public class ExchangeRateService {
         Optional<CurrencyRate> currencyRate = exchangeRateRepo.findById(id);
         return currencyRate.orElse(null);
     }
-    public List<CurrencyGrowth> getTop5CurrencyMovers(Enum movementType) throws JAXBException, IOException {
+    public List<CurrencyMovement> getTop5CurrencyMovers(Enum movementType) throws JAXBException, IOException {
         String url = "https://www.ecb.europa.eu/stats/eurofxref/eurofxref-hist-90d.xml";
 
         if (movementType == MovementType.GROWTH){
@@ -52,24 +52,24 @@ public class ExchangeRateService {
         return List.of();
     }
 
-    public List<CurrencyGrowth> findTop5GrowthCurrencyMovers(String url) throws JAXBException, IOException {
+    public List<CurrencyMovement> findTop5GrowthCurrencyMovers(String url) throws JAXBException, IOException {
         Map<String, List<CurrencyRate>> currencyRates = getStringListMap(url);
 
         ExchangeRateCalculator exchangeRateCalculator = new ExchangeRateCalculator();
-        List<CurrencyGrowth> growthList = exchangeRateCalculator.calculateGrowth(currencyRates);
+        List<CurrencyMovement> growthList = exchangeRateCalculator.calculateGrowth(currencyRates);
         return getTop5CurrenciesBasedOnGrowth(growthList);
     }
 
-    public List<CurrencyGrowth> findTop5CurrencyMovers(String url) throws JAXBException, IOException {
+    public List<CurrencyMovement> findTop5CurrencyMovers(String url) throws JAXBException, IOException {
         Map<String, List<CurrencyRate>> currencyRates = getStringListMap(url);
 
         ExchangeRateCalculator exchangeRateCalculator = new ExchangeRateCalculator();
-        List<CurrencyGrowth> moversList = exchangeRateCalculator.calculateTopMovements(currencyRates);
+        List<CurrencyMovement> moversList = exchangeRateCalculator.calculateTopMovements(currencyRates);
         return getTop5CurrenciesBasedOnGrowth(moversList);
     }
-    private List<CurrencyGrowth> getTop5CurrenciesBasedOnGrowth(List<CurrencyGrowth> growthList) {
+    private List<CurrencyMovement> getTop5CurrenciesBasedOnGrowth(List<CurrencyMovement> growthList) {
         return growthList.stream()
-                .sorted((a, b) -> Double.compare(Math.abs(b.getGrowth()), Math.abs(a.getGrowth())))
+                .sorted((a, b) -> Double.compare(Math.abs(b.getMovement()), Math.abs(a.getMovement())))
                 .limit(5)
                 .collect(Collectors.toList());
     }

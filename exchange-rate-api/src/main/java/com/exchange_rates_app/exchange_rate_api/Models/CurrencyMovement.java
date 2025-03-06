@@ -1,12 +1,12 @@
 package com.exchange_rates_app.exchange_rate_api.Models;
 
-public class CurrencyGrowth {
+public class CurrencyMovement {
     private String currency;
-    private Double growth;
+    private Double movement;
 
-    public CurrencyGrowth(String currency, Double growth) {
+    public CurrencyMovement(String currency, Double growth) {
         this.currency = currency;
-        this.growth = growth;
+        this.movement = growth;
     }
 
     public String getCurrency() {
@@ -17,12 +17,12 @@ public class CurrencyGrowth {
         this.currency = currency;
     }
 
-    public Double getGrowth() {
-        return growth;
+    public Double getMovement() {
+        return movement;
     }
 
     public void getGrowth(Double rate) {
-        this.growth = rate;
+        this.movement = rate;
     }
 }
 

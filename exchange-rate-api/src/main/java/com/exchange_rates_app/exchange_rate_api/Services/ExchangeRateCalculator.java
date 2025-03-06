@@ -1,16 +1,14 @@
 package com.exchange_rates_app.exchange_rate_api.Services;
 
-import com.exchange_rates_app.exchange_rate_api.Models.CurrencyGrowth;
+import com.exchange_rates_app.exchange_rate_api.Models.CurrencyMovement;
 import com.exchange_rates_app.exchange_rate_api.Models.CurrencyRate;
 
-import java.io.IOException;
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class ExchangeRateCalculator {
 
-    public List<CurrencyGrowth> calculateGrowth(Map<String, List<CurrencyRate>> currencyRates) {
-        List<CurrencyGrowth> growths = new ArrayList<>();
+    public List<CurrencyMovement> calculateGrowth(Map<String, List<CurrencyRate>> currencyRates) {
+        List<CurrencyMovement> growths = new ArrayList<>();
 
         for (Map.Entry<String, List<CurrencyRate>> entry : currencyRates.entrySet()) {
             String currency = entry.getKey();
@@ -21,14 +19,14 @@ public class ExchangeRateCalculator {
                 Double day10Rate = rateList.get(10).getRate();
 
                 Double growth = ((initialRate - day10Rate) / day10Rate) * 100;
-                growths.add(new CurrencyGrowth(currency, growth));
+                growths.add(new CurrencyMovement(currency, growth));
             }
         }
         return growths;
     }
 
-    public List<CurrencyGrowth> calculateTopMovements(Map<String, List<CurrencyRate>> currencyRates) {
-        List<CurrencyGrowth> movements = new ArrayList<>();
+    public List<CurrencyMovement> calculateTopMovements(Map<String, List<CurrencyRate>> currencyRates) {
+        List<CurrencyMovement> movements = new ArrayList<>();
 
         for (Map.Entry<String, List<CurrencyRate>> entry : currencyRates.entrySet()) {
             String currency = entry.getKey();
@@ -37,7 +35,7 @@ public class ExchangeRateCalculator {
             double maxGrowth = Double.NEGATIVE_INFINITY;
             double maxDecline = Double.POSITIVE_INFINITY;
 
-            for (int i = 0; i <= rateList.size() - 10; i++) {
+            for (int i = 0; i <= rateList.size() - 11; i++) {
                 double startRate = rateList.get(i).getRate();
                 double endRate = rateList.get(i + 10).getRate();
                 double change = ((endRate - startRate) / startRate) * 100;
@@ -46,8 +44,8 @@ public class ExchangeRateCalculator {
                 maxDecline = Math.min(maxDecline, change);
             }
 
-            movements.add(new CurrencyGrowth(currency, maxGrowth));
-            movements.add(new CurrencyGrowth(currency, maxDecline));
+            movements.add(new CurrencyMovement(currency, maxGrowth));
+            movements.add(new CurrencyMovement(currency, maxDecline));
         }
         return movements;
     }

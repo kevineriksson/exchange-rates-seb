@@ -1,6 +1,6 @@
 package com.exchange_rates_app.exchange_rate_api.Controllers;
 
-import com.exchange_rates_app.exchange_rate_api.Models.CurrencyGrowth;
+import com.exchange_rates_app.exchange_rate_api.Models.CurrencyMovement;
 import com.exchange_rates_app.exchange_rate_api.Models.CurrencyRate;
 import com.exchange_rates_app.exchange_rate_api.Services.ExchangeRateScheduler;
 import com.exchange_rates_app.exchange_rate_api.Services.ExchangeRateService;
@@ -43,12 +43,12 @@ public class ExchangeRateController {
     }
 
     @GetMapping("/top5/growth")
-    public List<CurrencyGrowth> getTop5GrowthCurrencyMovers() throws JAXBException, IOException {
+    public List<CurrencyMovement> getTop5GrowthCurrencyMovers() throws JAXBException, IOException {
         return exchangeRateService.getTop5CurrencyMovers(GROWTH);
     }
 
     @GetMapping("/top5/movement")
-    public List<CurrencyGrowth> getTop5CurrencyMovers() throws JAXBException, IOException {
+    public List<CurrencyMovement> getTop5CurrencyMovers() throws JAXBException, IOException {
         return exchangeRateService.getTop5CurrencyMovers(BIGGEST_MOVEMENT);
     }
 }
