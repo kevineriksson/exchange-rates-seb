@@ -2,7 +2,6 @@ package com.exchange_rates_app.exchange_rate_api.Controllers;
 
 import com.exchange_rates_app.exchange_rate_api.Models.CurrencyMovement;
 import com.exchange_rates_app.exchange_rate_api.Models.CurrencyRate;
-import com.exchange_rates_app.exchange_rate_api.Services.ExchangeRateScheduler;
 import com.exchange_rates_app.exchange_rate_api.Services.ExchangeRateService;
 import jakarta.xml.bind.JAXBException;
 import org.springframework.web.bind.annotation.*;
