@@ -20,27 +20,29 @@ public class ExchangeRateService {
 
     public void saveCurrencyRates(String url) throws JAXBException, IOException {
         Envelope envelope = ExchangeRateFetcher.fetchExchangeRates(url);
-        CubeWrapper cubeWrapper = envelope.getCubeContainer().getCubeWrappers().get(0);
-        LocalDate date = LocalDate.parse(envelope.getCubeContainer().getCubeWrappers().get(0).getTime());
+        List<CubeWrapper> cubeWrapperList = envelope.getCubeContainer().getCubeWrappers();
+        List<CurrencyRate> currencyRates = new ArrayList<>();
 
-        for (CubeRates rateData : cubeWrapper.getCubeRates()) {
-            CurrencyRate currencyRate = new CurrencyRate();
-            currencyRate.setCurrency(rateData.getCurrency());
-            currencyRate.setRate(Double.valueOf(rateData.getRate()));
-            currencyRate.setDate(date);
-
-            exchangeRateRepo.save(currencyRate);
+        for (CubeWrapper cubeWrapper : cubeWrapperList) {
+            LocalDate date = LocalDate.parse(cubeWrapper.getTime());
+            for (CubeRates rateData : cubeWrapper.getCubeRates()) {
+                CurrencyRate currencyRate = new CurrencyRate();
+                currencyRate.setCurrency(rateData.getCurrency());
+                currencyRate.setRate(Double.valueOf(rateData.getRate()));
+                currencyRate.setDate(date);
+                currencyRates.add(currencyRate);
+            }
         }
+        exchangeRateRepo.saveAll(currencyRates);
     }
 
-    public List<CurrencyRate> getAllCurrencyRates() {
-        return exchangeRateRepo.findAll();
+    public LocalDate findByDate() {
+        return exchangeRateRepo.findLatestDate();
+    }
+    public List<CurrencyRate> getLastCurrencyRates() {
+        return exchangeRateRepo.findByDate(findByDate());
     }
 
-    public CurrencyRate getCurrencyRateById(Long id) {
-        Optional<CurrencyRate> currencyRate = exchangeRateRepo.findById(id);
-        return currencyRate.orElse(null);
-    }
     public List<CurrencyMovement> getTop5CurrencyMovers(Enum movementType) throws JAXBException, IOException {
         String url = "https://www.ecb.europa.eu/stats/eurofxref/eurofxref-hist-90d.xml";
 

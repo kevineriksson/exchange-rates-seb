@@ -20,6 +20,6 @@ public class ExchangeRateApiApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		exchangeRateScheduler.fetchAndSaveRatesDaily();
+		exchangeRateScheduler.fetchAndSaveRates();
 	}
 }

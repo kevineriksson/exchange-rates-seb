@@ -9,20 +9,8 @@ public class CurrencyMovement {
         this.movement = growth;
     }
 
-    public String getCurrency() {
-        return currency;
-    }
-
-    public void setCurrency(String currency) {
-        this.currency = currency;
-    }
-
     public Double getMovement() {
         return movement;
-    }
-
-    public void getGrowth(Double rate) {
-        this.movement = rate;
     }
 }
 
