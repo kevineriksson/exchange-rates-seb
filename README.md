@@ -15,10 +15,10 @@ Write a web application with such functionality:
 
 # Backend - Spring Boot
 Requirements:
-Java 17 or higher
-Spring Boot 2.x
-H2 Database (configured in file-based mode for persistence)
-Maven or Gradle (for project management and dependencies)
+1. Java 17 or higher
+2. Spring Boot 2.x
+3. H2 Database
+4. Maven or Gradle 
 
 Steps:
 1. Clone the repository
@@ -31,14 +31,14 @@ GET /api/currencyRates/growth: Retrieve the top 5 currency movers based on bigge
 GET /api/currencyRates/movement: Retrieve the top 5 currency movers based on biggest movement in last 90 days over 10 day period.
 
 # Frontend - Angular
-Requirements:
-Node.js
-Angular CLI
-NPM
+1. Requirements:
+2. Node.js
+3. Angular CLI
+4. NPM
 
 Steps:
 1. Clone the repository:
-2. Navigate to the frontend directory:
+2. Navigate to the exchange-rates-app
 3. Install dependencies
 4. Run the application locally: ng serve
 The frontend will be accessible at http://localhost:4200.
