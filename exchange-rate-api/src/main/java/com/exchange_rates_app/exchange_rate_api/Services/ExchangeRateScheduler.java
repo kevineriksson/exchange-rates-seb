@@ -2,9 +2,11 @@ package com.exchange_rates_app.exchange_rate_api.Services;
 
 import jakarta.xml.bind.JAXBException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.time.LocalDate;
 
 @Component
 public class ExchangeRateScheduler {
@@ -16,15 +18,13 @@ public class ExchangeRateScheduler {
         this.exchangeRateService = exchangeRateService;
     }
 
-    //@Scheduled(cron = "0 0 16 * * ?")
-    public void fetchAndSaveRatesDaily() {
-        try {
-            String url = "https://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml";
-            exchangeRateService.saveCurrencyRates(url);
-        } catch (JAXBException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+    @Scheduled(cron = "0 0 16 * * ?")
+    public void fetchAndSaveRates() throws JAXBException, IOException {
+        LocalDate lastDate = exchangeRateService.findByDate();
+        LocalDate currentDate = LocalDate.now();
+
+        if (lastDate == null || !lastDate.equals(currentDate)) {
+            exchangeRateService.saveCurrencyRates("https://www.ecb.europa.eu/stats/eurofxref/eurofxref-hist-90d.xml");
         }
     }
 }
