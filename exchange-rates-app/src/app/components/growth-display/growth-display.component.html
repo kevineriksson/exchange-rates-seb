@@ -1,5 +1,6 @@
 <div class="top-5-movers" *ngIf="growthRates.length">
-  <h3>Top 5 growth movers over the last 10 days</h3>
+  <h3>Top 5 growth movers</h3>
+  <span>Over last 10 days</span>
   <ul>
     <li *ngFor="let rate of growthRates">
       <span class="currency">{{ rate.currency }}</span>
