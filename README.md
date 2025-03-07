@@ -1,7 +1,7 @@
 # Exchange rate application
 
 Overview
-This project consists of a backend service and a frontend application that fetches, stores, and displays exchange rate data from an API. The backend is built using Spring Boot and the frontend uses Angular.
+This project consists of a backend service and a frontend application that fetches, stores, and displays exchange rate data from an API. The backend is built using Spring Boot and the frontend uses Angular. At the moment the exchange rate data is stored in H2 in-memory mode, meaning it is only available while the application is running.
 
 The project had these requirements:
 Write a web application with such functionality:
